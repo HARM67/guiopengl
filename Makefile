@@ -6,7 +6,9 @@ GLFW3_LIB=-L LIB/glfw-3.1.2/unix/src/
 INCLUDES=-I ./includes/ -I ./lodepng/
 LIB= -lglfw3
 FRAMEWORK= -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
-SRC = srcs/main.cpp lodepng/lodepng.cpp srcs/OglInit.cpp
+SRC = srcs/main.cpp lodepng/lodepng.cpp srcs/CApplication.cpp srcs/CGraphic.cpp srcs/CAui.cpp \
+		srcs/CSurface.cpp srcs/CFile.cpp srcs/CImage.cpp
+
 
 all:
 		${CC} $(FLAG) -o ${BIN} ${SRC} $(INCLUDES) $(FRAMEWORK) $(GLFW3_INCLUDES) $(GLFW3_LIB) $(LIB) 

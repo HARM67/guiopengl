@@ -1,12 +1,11 @@
-#include "OglInit.hpp"
+#include "CApplication.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <GLFW/glfw3.h>
 
 int main()
 {
-   OglInit	my_ogl;
-   my_ogl.render();
+	CApplication	Application;
+	Application.init();
 	return (0);
 }
