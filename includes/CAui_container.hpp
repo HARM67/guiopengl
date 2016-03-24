@@ -7,6 +7,5 @@ class	CAui_container
 private:
 	CAui_container() {};
 	~CAui_container() {};
-public:
 };
 #endif

@@ -10,7 +10,6 @@ bool CTexture::load_texture (string file_name) {
 		fprintf (stderr, "ERROR: could not load %s\n", file_name.c_str());
 		return false;
 	}
-	// NPOT check
 	if ((width & (width - 1)) != 0 || (height & (height - 1)) != 0) {
 		fprintf (
 			stderr, "WARNING: texture %s is not power-of-2 dimensions\n", file_name.c_str()

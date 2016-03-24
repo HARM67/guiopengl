@@ -4,19 +4,18 @@
 # include "CGraphic.hpp"
 # include "CAui.hpp"
 # include "CAui_button.hpp"
-# include "CSurface.hpp"
-# include "CFile.hpp"
+//# include "CSurface.hpp"
+//# include "CFile.hpp"
 # include "CImage.hpp"
 
 class	CApplication
 {
 	t_position	pos;
 	t_size	size;
-	private:
+private:
 	   CGraphic		*m_graphic;
-	   CSurface		*m_surface;
 
-	public:
+public:
 		CApplication();
 		~CApplication();
 	

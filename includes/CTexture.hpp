@@ -6,6 +6,7 @@
 # include <string>
 # include <map>
 # include "stb_image.h"
+#define GLFW_INCLUDE_GLCOREARB
 # include <GLFW/glfw3.h>
 
 using namespace std;
@@ -22,16 +23,33 @@ private:
 	CTexture(){};
 	~CTexture(){};
 public:
-	static GLuint	create_texture(string filename)
+	static GLuint	create(string filename)
 	{
 		CTexture	*rt = new CTexture;
 		rt->load_texture(filename.c_str());
 		list.insert(pair<string, CTexture*>(filename, rt));
 		return (rt->nbr);
 	};
-	static CTexture	*get_texture(string filename)
+	static GLuint	get(string filename)
 	{
-		return (list.find(filename)->second);
+		map<string, CTexture *>::iterator it;
+		it = list.find(filename);
+		if (it != list.end())
+			return (it->second->nbr);
+		else
+			return (0);
+	};
+	static GLuint	auto_get(string filename)
+	{
+		map<string, CTexture *>::iterator it;
+		it = list.find(filename);
+		if (it != list.end())
+			return (it->second->nbr);
+		else
+		{
+			cout << "auto create texture "<< filename << endl;
+			return (create(filename));
+		}
 	};
 	int				getWidth();
 	int				getHeight();

@@ -16,7 +16,6 @@ class	CGraphic
 {
 	private:
 		static CGraphic		m_instance;
-
 		CGraphic();
 		~CGraphic();
 
