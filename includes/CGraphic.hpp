@@ -3,6 +3,10 @@
 //# include <GL/glew.h>
 # include <stdio.h>
 # include <iostream>
+# include <string>
+# include <map>
+# include "s_type.h"
+# include "stb_image.h"
 #define GLFW_INCLUDE_GLCOREARB
 # include <GLFW/glfw3.h>
 
@@ -16,11 +20,11 @@ class	CGraphic
 		CGraphic();
 		~CGraphic();
 
-
 	public:
+	float width;
+	float height;
 		GLFWwindow 			*m_window;
 		static CGraphic		*Instance();
-		//GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path);
 };
 
 #endif

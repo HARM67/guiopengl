@@ -4,7 +4,6 @@
 
 class	CSurface
 {
-	
 	GLuint	vao;
 	GLuint	vbo;
 	GLuint	img;
