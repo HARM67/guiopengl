@@ -13,8 +13,8 @@ CGraphic::CGraphic()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	m_window = glfwCreateWindow(width, height, "<--gui_Opengl-->", NULL, NULL);
 	glfwMakeContextCurrent(m_window);
-	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
-	glClearColor(0.3f, 0.2f, 0.2f, 0.0f);
+	//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
+	glClearColor(0.2f, 0.13f, 0.1f, 0.0f);
 }
 
 CGraphic::~CGraphic()
