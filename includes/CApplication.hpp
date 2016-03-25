@@ -4,8 +4,7 @@
 # include "CGraphic.hpp"
 # include "CAui.hpp"
 # include "CAui_button.hpp"
-//# include "CSurface.hpp"
-//# include "CFile.hpp"
+# include "CAui_window.hpp"
 # include "CImage.hpp"
 # include <stdlib.h>
 
@@ -17,8 +16,8 @@ private:
 	   CGraphic		*m_graphic;
 
 public:
-		CApplication();
-		~CApplication();
+		CApplication(){};
+		~CApplication(){};
 	
 	void	init();
 	void	render();

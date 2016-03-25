@@ -11,14 +11,15 @@ class	CAui
 {
 protected:
 	bool		visible;
-	bool		movable;
 	t_size		size;
 	static CAui		m_instance;
-	vector <CAui*>	content;
 	CAui();
 	~CAui();
 	
 public:
+	vector <CAui*>	content;
+	CAui		*father;
+	bool		movable;
 	static bool		run;
 	t_position	before_click;
 	t_position	pos;
@@ -33,16 +34,16 @@ public:
 	{
 		return (&m_instance);
 	};
-	static CAui	*create_instant()
+	/*static CAui	*create_instant()
 	{
 		return (new CAui);
-	};
+	};*/
 	void	set_position(float x, float y);
 	void	set_size(float width, float height);
 	void	add_Elem(CAui *elem);
 	CAui	*why(float x, float y);
 	virtual void	set_sprite(string){};
 	virtual void	mouse_button_callback(int button, int action, int mods);
-	void			(*click)(void);
+	void			(*click)(CAui	*);
 };
 #endif

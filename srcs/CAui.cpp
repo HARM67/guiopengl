@@ -11,13 +11,14 @@ CAui::CAui()
 	pos.y = 0;
 	size.width = CGraphic::Instance()->width;
 	size.height = CGraphic::Instance()->height;
-	movable	=	1;
 	in_move = 0;
 	abs_pos.x = 0;
 	abs_pos.y = 0;
 	before_click.x = 0;
 	before_click.y = 0;
 	visible = 1;
+	movable = 0;
+	name = "program";
 }
 
 CAui::~CAui()
@@ -38,9 +39,7 @@ void	CAui::set_size(float width, float height)
 
 void	CAui::add_Elem(CAui *elem)
 {
-	static int n = 0;
-	n++;
-//	name = "elem " +  to_string(n);
+	elem->father = this;
 	content.push_back(elem);
 }
 
