@@ -5,6 +5,7 @@
 # include <iostream>
 # include <string>
 # include <map>
+# include "s_type.h"
 # include "stb_image.h"
 #define GLFW_INCLUDE_GLCOREARB
 # include <GLFW/glfw3.h>
@@ -30,12 +31,12 @@ public:
 		list.insert(pair<string, CTexture*>(filename, rt));
 		return (rt->nbr);
 	};
-	static GLuint	get(string filename)
+	static CTexture	*get(string filename)
 	{
 		map<string, CTexture *>::iterator it;
 		it = list.find(filename);
 		if (it != list.end())
-			return (it->second->nbr);
+			return (it->second);
 		else
 			return (0);
 	};
@@ -51,7 +52,20 @@ public:
 			return (create(filename));
 		}
 	};
+	static GLuint	auto_get(string filename, t_size *size)
+	{
+		CTexture	*rt;
+
+		auto_get(filename);
+		rt = get(filename);
+		size->width = rt->width;
+		size->height = rt->height;
+		return (rt->nbr);
+	};
 	int				getWidth();
 	int				getHeight();
+	t_size			getSize();
+	void			setSize(float v_width, float v_height);
+	void			setSize(t_size size);
 };
 #endif

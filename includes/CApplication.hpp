@@ -7,6 +7,7 @@
 //# include "CSurface.hpp"
 //# include "CFile.hpp"
 # include "CImage.hpp"
+# include <stdlib.h>
 
 class	CApplication
 {

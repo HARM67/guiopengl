@@ -61,3 +61,23 @@ int		CTexture::getHeight()
 {
 	return (height);
 }
+
+void	CTexture::setSize(float v_width, float v_height)
+{
+	width	=	v_width;
+	height	=	v_height;
+}
+
+void	CTexture::setSize(t_size size)
+{
+	width = size.width;
+	height = size.height;
+}
+
+t_size	CTexture::getSize()
+{
+	t_size	rt;
+	rt.width = width;
+	rt.height = height;
+	return (rt);
+}

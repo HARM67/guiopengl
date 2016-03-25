@@ -3,13 +3,6 @@
 # include "CGraphic.hpp"
 # include "CShader.hpp"
 
-struct	bmp_header
-{
-	char			signature[2];
-	unsigned int	file_size;
-	char			reserved[4];
-};
-
 class	CImage	
 {
 private:
