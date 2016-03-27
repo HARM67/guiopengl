@@ -14,12 +14,16 @@ using namespace std;
 
 class	CGraphic
 {
+	GLuint			m_vao;
+
 	private:
+	void	Init_surface();
 		static CGraphic		m_instance;
 		CGraphic();
 		~CGraphic();
 
 	public:
+		GLuint	get_vao();
 	float width;
 	float height;
 		GLFWwindow 			*m_window;

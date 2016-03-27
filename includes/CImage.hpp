@@ -8,12 +8,9 @@ class	CImage
 {
 private:
 	static CImage	singleton;
-	GLuint			m_text_co;
 	GLuint			m_scr;
 	GLuint			m_pos;
 	GLuint			m_size;
-	GLuint			m_vao;
-	GLuint			m_vbo;
 	GLuint			m_color;
 	CGraphic		*p_graphic;
 	GLuint 			m_shader_programme;
@@ -29,7 +26,7 @@ public:
 		glUniform2f(singleton.m_pos, pos.x, pos.y);
 		glUniform2f(singleton.m_size, size.width, size.height);
 		glUniform4f(singleton.m_color, color.red, color.green, color.blue, color.alpha);
-		glBindVertexArray(singleton.m_vao);
+		glBindVertexArray(CGraphic::Instance()->get_vao());
 		glBindTexture (GL_TEXTURE_2D, img);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}

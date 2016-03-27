@@ -1,5 +1,5 @@
 #ifndef CSHADER_HPP
-# define CSHADER HPP
+# define CSHADER_HPP
 
 # include <iostream>
 # include <string>

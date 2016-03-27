@@ -7,6 +7,7 @@
 # include "CAui_window.hpp"
 # include "CAui_h_container.hpp"
 # include "CAui_v_container.hpp"
+# include "CFont.hpp"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
