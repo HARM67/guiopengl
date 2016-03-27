@@ -14,7 +14,7 @@ CAui_window::CAui_window()
 	bg_color.red = 0.0f;
 	bg_color.green = 0.0f;
 	bg_color.blue = 0.0f;
-	bg_color.alpha = 0.9f;
+	bg_color.alpha = 0.8f;
 	size_mode = 0xf;
 }
 

@@ -56,10 +56,9 @@ void	CFont::load_char_font(unsigned int c)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
 }
 
-void	CFont::print_char(unsigned int	c, t_position pos, t_color color)
+FT_GlyphSlot	CFont::print_char(unsigned int	c, t_position pos, t_color color)
 {
 	t_font2::iterator it;
 	
@@ -79,4 +78,5 @@ void	CFont::print_char(unsigned int	c, t_position pos, t_color color)
 	glUniform4f(m_color, color.red, color.green, color.blue, color.alpha);
 	glBindTexture (GL_TEXTURE_2D, it->second->nbr);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+	return (it->second->slot);
 }

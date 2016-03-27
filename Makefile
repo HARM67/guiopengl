@@ -11,7 +11,7 @@ FRAMEWORK= -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVi
 CSRCS = srcs/CApplication.cpp srcs/CGraphic.cpp srcs/CAui.cpp \
 		srcs/CTexture.cpp srcs/CShader.cpp srcs/CAui_button.cpp srcs/CAui_cmd.cpp \
 		srcs/CAui_window.cpp srcs/CAui_h_container.cpp  srcs/CAui_v_container.cpp \
-		srcs/CImage.cpp srcs/CFont.cpp
+		srcs/CImage.cpp srcs/CFont.cpp srcs/CAui_texte.cpp
 SRC = srcs/main.cpp
 L_SRCS=./LIB/stb_image/stb_image.c
 #./LIB/gl_utils/gl_utils.cpp

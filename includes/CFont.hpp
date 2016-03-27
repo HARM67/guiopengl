@@ -47,26 +47,31 @@ private:
 	GLuint			m_color;
 	GLuint 			m_shader_programme;
 
-	void			print_char(unsigned int	c, t_position pos, t_color color);
+	FT_GlyphSlot	print_char(unsigned int	c, t_position pos, t_color color);
 	void			load_char_font(unsigned int c);
 public:
 	static void	load_font(string name, string font_name, unsigned int size)
 	{
 		CFont	*rt;
-
+		
+		map<string, CFont *>::iterator it;
+		it = list.find(name);
+		if (it != list.end())
+			return ;
 		rt = new CFont();
 		rt->size = size;
 		rt->font_name = font_name;
 		rt->load();
 		list.insert(pair<string, CFont *>(name, rt));
+		cout << "J'ai insere " << name << endl;
 	};
-	static void	put_char(string name, unsigned int c, t_position pos, t_color color)
+	static FT_GlyphSlot	put_char(string name, unsigned int c, t_position pos, t_color color)
 	{
 		map<string, CFont *>::iterator it;
 		it = list.find(name);
 		if (it == list.end())
-			return ;
-		it->second->print_char(c, pos, color);
+			return (0);
+		return (it->second->print_char(c, pos, color));
 	};
 };
 #endif
