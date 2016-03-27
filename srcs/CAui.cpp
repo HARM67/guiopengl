@@ -6,7 +6,6 @@ bool			CAui::run = 1;
 
 CAui::CAui()
 {
-	cout << "Je suis un container" << endl;
 	pos.x = 0;
 	pos.y = 0;
 	size.width = CGraphic::Instance()->width;
@@ -19,6 +18,11 @@ CAui::CAui()
 	visible = 1;
 	movable = 0;
 	name = "program";
+	bg_color.red = 1.0f;
+	bg_color.green = 1.0f;
+	bg_color.blue = 1.0f;
+	bg_color.alpha = 1.0f;
+	size_mode = 0;
 }
 
 CAui::~CAui()
@@ -43,20 +47,32 @@ void	CAui::add_Elem(CAui *elem)
 	content.push_back(elem);
 }
 
-void	CAui::draw()
+t_size	CAui::draw()
 {
 	draw_child(pos.x, pos.y);
+	return (size);
 }
 
-void	CAui::draw_child(float pos_x, float pos_y)
+t_size	CAui::draw(float, float)
 {
+	return (size);
+}
+
+t_size	CAui::draw_child(float pos_x, float pos_y)
+{
+	t_size	rt;
 	int	i;
 
 	i = -1;
+	rt.width = 0.0f;
+	rt.height= 0.0f;
 	while (++i < (int)content.size())
 	{
 		content[i]->draw(pos_x, pos_y);
+		rt.width += content[i]->size.width;
+		rt.height += content[i]->size.height;
 	}
+	return (rt);
 }
 
 CAui	*CAui::why(float x, float y)
@@ -74,4 +90,10 @@ CAui	*CAui::why(float x, float y)
 
 void	CAui::mouse_button_callback(int button, int action, int mods)
 {
+	cout << "Clique sur le fond" << endl;
+}
+
+void	CAui::cursor_position_callback(int status, double xpos, double ypos)
+{
+
 }

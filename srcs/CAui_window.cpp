@@ -2,7 +2,7 @@
 
 CAui_window::CAui_window()
 {
-	sprite	= "images/default_window.png";
+	sprite	= "images/blanc.bmp";
 	pos.x = 0;
 	pos.y = 0;
 	size.width = 0;
@@ -10,6 +10,12 @@ CAui_window::CAui_window()
 	click = 0;
 	movable = 1;
 	name = "window";
+	CTexture::auto_get(sprite, &size);
+	bg_color.red = 0.0f;
+	bg_color.green = 0.0f;
+	bg_color.blue = 0.0f;
+	bg_color.alpha = 0.9f;
+	size_mode = 0xf;
 }
 
 CAui_window::~CAui_window()
@@ -17,21 +23,24 @@ CAui_window::~CAui_window()
 
 }
 
-void CAui_window::draw()
+t_size	CAui_window::draw()
 {
 	if (!visible)
-		return ;
-	CImage::draw_Image(pos, size, CTexture::auto_get(sprite, &size));
+		return (size);
+	CImage::draw_Image(pos, size, CTexture::auto_get(sprite), bg_color);
+	return (size);
 }
 
 void	CAui_window::set_sprite(string filename)
 {
 	sprite = filename;
+	CTexture::auto_get(sprite, &size);
 }
 
-void	CAui_window::draw(float x, float y)
+t_size	CAui_window::draw(float x, float y)
 {
 	t_position		v_pos;
+	t_size			child_size;
 	double xpos, ypos;
 
 	glfwGetCursorPos(CGraphic::Instance()->m_window, &xpos, &ypos);
@@ -44,8 +53,33 @@ void	CAui_window::draw(float x, float y)
 	}
 	v_pos.x = x + pos.x;
 	v_pos.y = y + pos.y;
-	CImage::draw_Image(v_pos, size, CTexture::auto_get(sprite, &size));
-	draw_child(v_pos.x, v_pos.y);
+	child_size = draw_child(v_pos.x, v_pos.y);
+	if ((size_mode & 0x2) == 0x2)
+		size.height = child_size.height + 10.0f;
+	if ((size_mode & 0xc) == 0xc)
+		size.width = child_size.width;
+	CImage::draw_Image(v_pos, size, CTexture::auto_get(sprite), bg_color);
+	return (size);
+}
+
+t_size	CAui_window::draw_child(float pos_x, float pos_y)
+{
+	t_size	rt;
+	t_size	tmp;
+	int	i;
+
+	i = -1;
+	rt.width = 0.0f;
+	rt.height = 0.0f;
+	pos_y += 10.0f;
+	while (++i < (int)content.size())
+	{
+		tmp = content[i]->draw(pos_x, pos_y);
+		rt.width = (rt.width > content[i]->size.width) ? rt.width : tmp.width;
+		rt.height += tmp.height;
+		pos_y += tmp.height;
+	}
+	return (rt);
 }
 
 void	CAui_window::mouse_button_callback(int window, int action, int mods)
@@ -67,8 +101,30 @@ void	CAui_window::mouse_button_callback(int window, int action, int mods)
 			return ;
 		tmp = father->content[i];
 		father->content.erase(father->content.begin() + i);
-		father->content.push_back(tmp);
+		father->content.insert(father->content.begin(), tmp);
 	}
 	if (click && !action && in_move)
 		click(this);
+}
+
+void	CAui_window::cursor_position_callback(int status, double xpos, double ypos)
+{
+
+}
+
+CAui	*CAui_window::why(float x, float y)
+{
+	int	i;
+
+	if (x < pos.x || x > pos.x + size.width || y < pos.y || y > pos.y + size.height)
+		return (0);
+	i = -1;
+	y -= 10.0f;
+	while (++i <  (int)content.size())
+	{
+		if (content[i]->why(x - pos.x, y - pos.y))
+			return (content[i]->why(x - pos.x, y - pos.y));
+		y -= content[i]->size.height + content[i]->pos.y;
+	}
+	return (this);
 }

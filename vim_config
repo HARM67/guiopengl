@@ -1,0 +1,19 @@
+:tabe ../includes/CApplication.hpp
+:vs ../srcs/CApplication.cpp
+ :tabe ../includes/CGraphic.hpp
+:vs ../srcs/CGraphic.cpp
+ :tabe ../includes/CAui.hpp
+:vs ../srcs/CAui.cpp
+ :tabe ../includes/CTexture.hpp
+:vs ../srcs/CTexture.cpp
+ :tabe ../includes/CShader.hpp
+:vs ../srcs/CShader.cpp
+ :tabe ../includes/CAui_button.hpp
+:vs ../srcs/CAui_button.cpp
+ :tabe ../includes/CAui_cmd.hpp
+:vs ../srcs/CAui_cmd.cpp
+ :tabe ../includes/CAui_window.hpp
+:vs ../srcs/CAui_window.cpp
+ :tabe ../includes/CImage.hpp
+:vs ../srcs/CImage.cpp
+

@@ -6,8 +6,8 @@ CImage CImage::singleton;
 CImage::CImage()
 {
 	p_graphic = CGraphic::Instance();
-	//glEnable(GL_DEPTH_TEST);
-	//glDepthFunc(GL_LESS);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 	GLfloat uv_data[] = {
 		0.0f, 0.0f,
 		1.0f, 0.0f,
@@ -46,6 +46,7 @@ CImage::CImage()
 	m_scr = glGetUniformLocation(m_shader_programme, "scr");
 	m_pos = glGetUniformLocation(m_shader_programme, "pos");
 	m_size = glGetUniformLocation(m_shader_programme, "size");
+	m_color = glGetUniformLocation(m_shader_programme, "in_color");
 }
 
 CImage::~CImage()

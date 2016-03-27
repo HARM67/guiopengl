@@ -11,12 +11,14 @@ class	CAui
 {
 protected:
 	bool		visible;
-	t_size		size;
 	static CAui		m_instance;
 	CAui();
 	~CAui();
 	
 public:
+	t_size		size;
+	unsigned char	size_mode;
+	t_color			bg_color;
 	vector <CAui*>	content;
 	CAui		*father;
 	bool		movable;
@@ -26,9 +28,9 @@ public:
 	t_position	abs_pos;
 	bool		in_move;
 	string		name;
-	virtual void	draw();
-	virtual void	draw(float, float){};
-	virtual void	draw_child(float pos_x, float pos_y);
+	virtual t_size	draw();
+	virtual t_size	draw(float, float);
+	virtual t_size	draw_child(float pos_x, float pos_y);
 	static t_position	click_down;
 	static CAui	*Instance()
 	{
@@ -41,9 +43,10 @@ public:
 	void	set_position(float x, float y);
 	void	set_size(float width, float height);
 	void	add_Elem(CAui *elem);
-	CAui	*why(float x, float y);
+	virtual CAui	*why(float x, float y);
 	virtual void	set_sprite(string){};
 	virtual void	mouse_button_callback(int button, int action, int mods);
+	virtual void	cursor_position_callback(int status, double xpos, double ypos);
 	void			(*click)(CAui	*);
 };
 #endif

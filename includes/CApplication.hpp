@@ -5,6 +5,12 @@
 # include "CAui.hpp"
 # include "CAui_button.hpp"
 # include "CAui_window.hpp"
+# include "CAui_h_container.hpp"
+# include "CAui_v_container.hpp"
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 # include "CImage.hpp"
 # include <stdlib.h>
 

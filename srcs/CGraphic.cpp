@@ -14,7 +14,7 @@ CGraphic::CGraphic()
 	m_window = glfwCreateWindow(width, height, "<--gui_Opengl-->", NULL, NULL);
 	glfwMakeContextCurrent(m_window);
 	//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
-	glClearColor(0.2f, 0.13f, 0.1f, 0.0f);
+	glClearColor(0.12f, 0.150f, 0.25f, 0.0f);
 }
 
 CGraphic::~CGraphic()

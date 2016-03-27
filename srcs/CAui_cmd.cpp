@@ -27,7 +27,21 @@ void	mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	}
 }
 
+void	cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	CAui	*tmp;
+
+	if (CAui_cmd::Instance()->current)
+		CAui_cmd::Instance()->current->cursor_position_callback(0, xpos, ypos);
+	tmp = CAui::Instance()->why((float) xpos, (float)ypos);
+	if (!tmp)
+		return ;
+	CAui_cmd::Instance()->current = tmp;
+	tmp->cursor_position_callback(1, xpos, ypos);
+}
+
 CAui_cmd::CAui_cmd()
 {
 	glfwSetMouseButtonCallback(CGraphic::Instance()->m_window, *mouse_button_callback);
+	glfwSetCursorPosCallback(CGraphic::Instance()->m_window, *cursor_position_callback);
 }
