@@ -55,7 +55,7 @@ t_size	CAui_window::draw(float x, float y)
 	v_pos.y = y + pos.y;
 	child_size = draw_child(v_pos.x, v_pos.y);
 	if ((size_mode & 0x2) == 0x2)
-		size.height = child_size.height + 10.0f;
+		size.height = child_size.height + 15.0f;
 	if ((size_mode & 0xc) == 0xc)
 		size.width = child_size.width;
 	CImage::draw_Image(v_pos, size, CTexture::auto_get(sprite), bg_color);
@@ -71,7 +71,7 @@ t_size	CAui_window::draw_child(float pos_x, float pos_y)
 	i = -1;
 	rt.width = 0.0f;
 	rt.height = 0.0f;
-	pos_y += 10.0f;
+	pos_y += 15.0f;
 	while (++i < (int)content.size())
 	{
 		tmp = content[i]->draw(pos_x, pos_y);
@@ -119,7 +119,7 @@ CAui	*CAui_window::why(float x, float y)
 	if (x < pos.x || x > pos.x + size.width || y < pos.y || y > pos.y + size.height)
 		return (0);
 	i = -1;
-	y -= 10.0f;
+	y -= 15.0f;
 	while (++i <  (int)content.size())
 	{
 		if (content[i]->why(x - pos.x, y - pos.y))

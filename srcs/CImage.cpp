@@ -8,6 +8,15 @@ CImage::CImage()
 	p_graphic = CGraphic::Instance();
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+	/*GLfloat uv_data[] = {
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f
+	};
+	*/
 	GLfloat uv_data[] = {
 		0.0f, 0.0f,
 		1.0f, 0.0f,
@@ -16,6 +25,7 @@ CImage::CImage()
 		0.0f, 1.0f,
 		0.0f, 0.0f
 	};
+	
 	GLfloat	points[] = {
 		0.0f, 0.0f,  0.0f,
 		1.0f, 0.0f,  0.0f,
