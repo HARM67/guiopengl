@@ -1,0 +1,57 @@
+{
+	name : v_container,
+	child : {
+		name : text,
+		str : titre,
+		pos_x : 5
+	},
+	child : {
+		name : h_container,
+		pos_y : 5,
+		child : {
+			name : v_container,
+			child : {
+				name : button,
+				width : 30,
+				height : 30
+			},
+			child : {
+				name : button,
+				width : 30,
+				height : 30
+			}
+		},
+		child : {
+			name : v_container,
+			child : {
+				name : button,
+				width : 30,
+				height : 30
+			},
+			child : {
+				name : button,
+				width : 30,
+				height : 30
+			}
+		},
+		child : {
+			name : v_container,
+			child : {
+				name : button,
+				width : 90,
+				height : 30
+			},
+			child : {
+				name : button,
+				width : 90,
+				height : 30
+			}
+		}
+	},
+	child : {
+		name : button
+	},
+	child : {
+		name : button
+	}
+}

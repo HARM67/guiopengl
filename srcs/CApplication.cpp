@@ -16,6 +16,7 @@ void	resize(CAui	*elem)
 //	CAui			*only = CAui::Instance();
 }
 
+
 void	insert_window(CAui	*elem)
 {
 	CAui			*only = CAui::Instance();
@@ -31,9 +32,7 @@ void	insert_window(CAui	*elem)
 	win->set_position(100.0f, 100.0f);
 	only->add_Elem(win);
 
-	texte = CAui_texte::create_texte("Mathieu\n42\nguiOpengl");
-	texte->set_position(5.0f, 0.0f);
-	win->add_Elem(texte);
+	win->add_Elem(CAui_loader::parse_object("tt.cat"));
 
 	ct = CAui::create("h_container");
 	win->add_Elem(ct);
@@ -71,44 +70,13 @@ void	insert_window(CAui	*elem)
 	bt = CAui::create("button");
 	bt->click = insert_window;
 	win->add_Elem(bt);
-	/*
-	bt2 = CAui_window::create_window();
-	bt2->set_position(0.0f, 0.0f);
-	bt2->set_size(180.0f, CGraphic::Instance()->height / 3);
-	only->add_Elem(bt2);
-
-	bt3 = CAui_button::create_button();
-
-	bt3->click = insert_window;
-	bt2->add_Elem(bt3);
-
-	bt3 = CAui_button::create_button();
-	bt3->click = quit;
-	bt2->add_Elem(bt3);
-	bt3 = CAui_button::create_button();
-
-	bt3->click = insert_window;
-	bt2->add_Elem(bt3);
-
-	bt3 = CAui_button::create_button();
-	bt3->click = quit;
-	bt2->add_Elem(bt3);
-
-
-	*/
 }
 
 void	CApplication::init()
 {
+	CAui			*only = CAui::Instance();
 
-	t_position	pos;
-	pos.x = 0.0f;
-	pos.y = 0.0f;
-	t_color	color;
-	color.red = 1.0f;
-	color.alpha = 1.0f;
-	CFont::load_font("font1", "fonts/Arial Narrow.ttf", 25);
-	
+	//CAui_loader	loader;
 	insert_window(0);
 	while( glfwGetKey(CGraphic::Instance()->m_window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
 			glfwWindowShouldClose(CGraphic::Instance()->m_window) == 0 &&

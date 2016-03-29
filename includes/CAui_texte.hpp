@@ -5,9 +5,12 @@
 # include "s_type.h"
 # include "CFont.hpp"
 
+typedef struct Init_texte t_Init_texte;
+
 class CAui_texte : public CAui
 {
 private:
+	static t_Init_texte		not_use;
 	string		font;
 	string		font_name;
 	t_color		color;
@@ -16,12 +19,11 @@ private:
 	CAui_texte(string n_str);
 	~CAui_texte();
 public:
-	string		str;
-	static CAui_texte	*create_texte()
+	static CAui	*create_texte()
 	{
 		return (new CAui_texte);
 	};
-	static CAui_texte	*create_texte(string n_str)
+	static CAui	*create_texte(string n_str)
 	{
 		return (new CAui_texte(n_str));
 	};
@@ -33,5 +35,13 @@ public:
 	t_size			draw_child(float pos_x, float pos_y);
 	virtual CAui	*why(float x, float y);
 	virtual t_size	set_drawsize();
+};
+
+struct	Init_texte
+{
+	Init_texte()
+	{
+		CAui::objects.insert(pair<string, CAui *(*)()>("text", &CAui_texte::create_texte));
+	}
 };
 #endif

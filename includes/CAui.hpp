@@ -19,6 +19,7 @@ protected:
 	static CAui		m_instance;
 	CAui();
 	~CAui();
+	string		str;
 	
 public:
 	typedef vector<CAui *> list_child;
@@ -64,6 +65,7 @@ public:
 	virtual void	cursor_position_callback(int status, double xpos, double ypos);
 	void			(*click)(CAui	*);
 	virtual t_size	set_drawsize();
+	void			set_str(string n_str);
 };
 
 #endif

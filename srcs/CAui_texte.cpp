@@ -1,5 +1,7 @@
 #include "CAui_texte.hpp"
 
+Init_texte	CAui_texte::not_use;
+
 CAui_texte::CAui_texte()
 {
 	font_size = 16;
@@ -12,11 +14,12 @@ CAui_texte::CAui_texte()
 	size.height = 0;
 	click = 0;
 	movable = 0;
-	name = "texte";
+	name = "text";
 	color.red = 1.0f;
 	color.green = 1.0f;
 	color.blue = 1.0f;
 	color.alpha = 1.0f;
+	str = "zone de texte";
 }
 
 CAui_texte::CAui_texte(string n_str)
@@ -32,7 +35,7 @@ CAui_texte::CAui_texte(string n_str)
 	size.height = 0;
 	click = 0;
 	movable = 0;
-	name = "texte";
+	name = "text";
 	color.red = 1.0f;
 	color.green = 1.0f;
 	color.blue = 1.0f;

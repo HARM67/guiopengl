@@ -60,7 +60,7 @@ t_size	CAui_window::draw(float x, float y)
 	/*
 	*/CImage::draw_Image(v_pos, draw_size, CTexture::auto_get(sprite), bg_color);
 	child_size = draw_child(v_pos.x, v_pos.y);
-	return (size);
+	return (draw_size);
 }
 
 t_size	CAui_window::draw_child(float pos_x, float pos_y)

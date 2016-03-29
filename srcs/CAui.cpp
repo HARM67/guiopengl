@@ -59,6 +59,10 @@ t_size	CAui::draw(float, float)
 	return (size);
 }
 
+void	CAui::set_str(string n_str)
+{
+	str = n_str;
+}
 
 t_size	CAui::set_drawsize()
 {

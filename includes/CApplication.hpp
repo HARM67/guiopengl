@@ -9,6 +9,7 @@
 # include "CAui_v_container.hpp"
 # include "CFont.hpp"
 # include "CAui_texte.hpp"
+# include "CAui_loader.hpp"
 
 # include "CImage.hpp"
 # include <stdlib.h>

@@ -25,7 +25,7 @@ CAui_v_container::~CAui_v_container()
 
 t_size	CAui_v_container::draw()
 {
-	return (size);
+	return (draw_size);
 }
 
 t_size	CAui_v_container::draw(float x, float y)
@@ -49,7 +49,7 @@ t_size	CAui_v_container::draw(float x, float y)
 		size.height = child_size.height;
 	if ((size_mode & 0xc) == 0xc)
 		size.width = child_size.width;
-	return (size);
+	return (draw_size);
 }
 
 t_size	CAui_v_container::set_drawsize()
@@ -69,6 +69,8 @@ t_size	CAui_v_container::set_drawsize()
 		if ((size_mode & 0x2) == 0x2)
 			draw_size.height += tmp.height;
 	}
+	draw_size.width += pos.x;
+	draw_size.height += pos.y;
 	return (draw_size);
 }
 t_size	CAui_v_container::draw_child(float pos_x, float pos_y)
