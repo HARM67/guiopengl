@@ -1,8 +1,9 @@
 #include "CAui.hpp"
 
-CAui			CAui::m_instance;
-t_position		CAui::click_down;
-bool			CAui::run = 1;
+CAui::list_object		CAui::objects;
+CAui					CAui::m_instance;
+t_position				CAui::click_down;
+bool					CAui::run = 1;
 
 CAui::CAui()
 {
@@ -56,6 +57,21 @@ t_size	CAui::draw()
 t_size	CAui::draw(float, float)
 {
 	return (size);
+}
+
+
+t_size	CAui::set_drawsize()
+{
+	int	i;
+
+	i = -1;
+	draw_size.width = size.width + pos.x;
+	draw_size.height = size.height + pos.y;
+	while (++i < (int)content.size())
+	{
+		content[i]->set_drawsize();
+	}
+	return (draw_size);
 }
 
 t_size	CAui::draw_child(float pos_x, float pos_y)

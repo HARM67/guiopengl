@@ -1,5 +1,7 @@
 #include "CAui_h_container.hpp"
 
+Init_h_container	CAui_h_container::not_use;
+
 CAui_h_container::CAui_h_container()
 {
 	pos.x = 0;
@@ -48,6 +50,26 @@ t_size	CAui_h_container::draw(float x, float y)
 	if ((size_mode & 0xc) == 0xc)
 		size.width = child_size.width;
 	return (size);
+}
+
+t_size	CAui_h_container::set_drawsize()
+{
+	t_size	tmp;
+	int	i;
+
+	i = -1;
+		draw_size = size;
+	if ((size_mode & 0xc) == 0xc)
+		draw_size.width = 0.0f;
+	while (++i < (int)content.size())
+	{
+		tmp = content[i]->set_drawsize();
+		if ((size_mode & 0xc) == 0xc)
+			draw_size.width += tmp.width;
+		if ((size_mode & 0x2) == 0x2)
+			draw_size.height = (draw_size.height > content[i]->size.height) ? draw_size.height : tmp.height;
+	}
+	return (draw_size);
 }
 
 t_size	CAui_h_container::draw_child(float pos_x, float pos_y)

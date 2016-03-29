@@ -19,7 +19,7 @@ typedef	struct s_letter	t_letter;
 struct	s_letter
 {
 	GLuint			nbr;
-	FT_GlyphSlot	slot;
+	FT_Face     	face;
 };
 
 class	CFont	
@@ -38,7 +38,6 @@ private:
 	unsigned int	size;
 	string			font_name;
 	FT_Library  library;
-	FT_Face     face;
 	int error;
 
 	GLuint			m_scr;
@@ -50,6 +49,8 @@ private:
 	FT_GlyphSlot	print_char(unsigned int	c, t_position pos, t_color color);
 	void			load_char_font(unsigned int c);
 public:
+
+	void	print_all_slot();
 	static void	load_font(string name, string font_name, unsigned int size)
 	{
 		CFont	*rt;
@@ -72,6 +73,22 @@ public:
 		if (it == list.end())
 			return (0);
 		return (it->second->print_char(c, pos, color));
+	};
+	static FT_GlyphSlot	get_drawsize(string name, unsigned int c)
+	{
+		map<string, CFont *>::iterator it;
+		it = list.find(name);
+		if (it == list.end())
+			return (0);
+		t_font2::iterator it2;
+		
+		it2 = it->second->char_font.find(c);
+		if (it2 == it->second->char_font.end())
+		{
+			it->second->load_char_font(c);
+			it2 = it->second->char_font.find(c);
+		}
+		return (it2->second->face->glyph);
 	};
 };
 #endif

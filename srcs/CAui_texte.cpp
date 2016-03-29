@@ -3,27 +3,8 @@
 CAui_texte::CAui_texte()
 {
 	font_size = 16;
-	font_name = "default_font";
-	font = "/Library/Fonts/Arial Black.ttf";
-	CFont::load_font(font_name, font, font_size);
-	pos.x = 0;
-	pos.y = 0;
-	size.width = 0;
-	size.height = 0;
-	click = 0;
-	movable = 0;
-	name = "texte";
-	color.red = 7.0f;
-	color.green = 1.0f;
-	color.blue = 2.0f;
-	color.alpha = 1.0f;
-}
-
-CAui_texte::CAui_texte(string n_str)
-{
-	font_size = 16;
-	font_name = "default_font";
-	font = "/Library/Fonts/Arial Black.ttf";
+	font_name = "Arial Narrow 16";
+	font = "fonts/Arial Narrow.ttf";
 	CFont::load_font(font_name, font, font_size);
 	pos.x = 0;
 	pos.y = 0;
@@ -33,10 +14,29 @@ CAui_texte::CAui_texte(string n_str)
 	movable = 0;
 	name = "texte";
 	color.red = 1.0f;
-	color.green = 0.0f;
+	color.green = 1.0f;
 	color.blue = 1.0f;
 	color.alpha = 1.0f;
+}
+
+CAui_texte::CAui_texte(string n_str)
+{
 	str = n_str;
+	font_size = 16;
+	font_name = "Arial Narrow 16";
+	font = "fonts/Arial Narrow.ttf";
+	CFont::load_font(font_name, font, font_size);
+	pos.x = 0;
+	pos.y = 0;
+	size.width = 0;
+	size.height = 0;
+	click = 0;
+	movable = 0;
+	name = "texte";
+	color.red = 1.0f;
+	color.green = 1.0f;
+	color.blue = 1.0f;
+	color.alpha = 1.0f;
 }
 
 t_size	CAui_texte::draw()
@@ -49,17 +49,28 @@ t_size	CAui_texte::draw()
 
 t_size	CAui_texte::print_string(t_position v_pos)
 {
-	int		i;
+	int				i;
 	FT_GlyphSlot	slot;
-	t_size	rt;
+	t_size			rt;
+	t_position		tmp_pos;
 
 	i = -1;
-	v_pos.x += 100.0f;
-	v_pos.y += 100.0f;
+	rt.height = 16;
+	rt.width = 0.0f;
+	tmp_pos = v_pos;
 	while (++i < str.size())
 	{
-		slot = CFont::put_char(font, str[i], v_pos, color);
-		v_pos.x += 20.0f;
+		if (str[i] == '\n')
+		{
+			v_pos.y += 16;
+			rt.height += 16;
+			tmp_pos = v_pos;
+			continue ;
+		}
+		slot = CFont::put_char(font_name, str[i], tmp_pos, color);
+		//rt.height = (rt.height > sl)
+		rt.width += slot->bitmap.width + slot->bitmap_left;
+		tmp_pos.x += slot->advance.x >> 6;
 	}
 	return (rt);
 }
@@ -68,25 +79,38 @@ t_size	CAui_texte::draw(float x, float y)
 {
 	t_position		v_pos;
 	t_size			child_size;
-	double xpos, ypos;
 
-	glfwGetCursorPos(CGraphic::Instance()->m_window, &xpos, &ypos);
-	if (in_move && movable)
-	{
-		pos.x += (float)xpos - CAui::click_down.x;
-		pos.y += (float)ypos - CAui::click_down.y;
-		CAui::click_down.x = (float)xpos;
-		CAui::click_down.y = (float)ypos;
-	}
 	v_pos.x = x + pos.x;
 	v_pos.y = y + pos.y;
-	child_size = draw_child(v_pos.x, v_pos.y);
-	if ((size_mode & 0x2) == 0x2)
+	//child_size = draw_child(v_pos.x, v_pos.y);
+	/*if ((size_mode & 0x2) == 0x2)
 		size.height = child_size.height + 15.0f;
 	if ((size_mode & 0xc) == 0xc)
 		size.width = child_size.width;
-	print_string(v_pos);
+	*/
+	size = print_string(v_pos);
 	return (size);
+}
+
+t_size	CAui_texte::set_drawsize()
+{
+	int				i;
+	FT_GlyphSlot	slot;
+
+	i = -1;
+	draw_size.height = 16;
+	draw_size.width = 0.0f;
+	while (++i < str.size())
+	{
+		if (str[i] == '\n')
+		{
+			draw_size.height += 16;
+			continue ;
+		}
+		slot = CFont::get_drawsize(font_name, str[i]);
+		draw_size.width += slot->bitmap.width + slot->bitmap_left;
+	}
+	return (draw_size);
 }
 
 t_size	CAui_texte::draw_child(float pos_x, float pos_y)

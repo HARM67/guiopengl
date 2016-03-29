@@ -14,6 +14,14 @@
 :vs ../srcs/CAui_cmd.cpp
  :tabe ../includes/CAui_window.hpp
 :vs ../srcs/CAui_window.cpp
+ :tabe ../includes/CAui_h_container.hpp
+:vs ../srcs/CAui_h_container.cpp
+ :tabe ../includes/CAui_v_container.hpp
+:vs ../srcs/CAui_v_container.cpp
  :tabe ../includes/CImage.hpp
 :vs ../srcs/CImage.cpp
+ :tabe ../includes/CFont.hpp
+:vs ../srcs/CFont.cpp
+ :tabe ../includes/CAui_texte.hpp
+:vs ../srcs/CAui_texte.cpp
 

@@ -1,5 +1,7 @@
 #include "CAui_button.hpp"
 
+Init_button		CAui_button::not_use;
+
 CAui_button::CAui_button()
 {
 	sprite	= "images/blanc.bmp";
@@ -38,7 +40,6 @@ t_size	CAui_button::draw(float x, float y)
 	t_size			draw_size;
 	t_size			rt;
 
-	draw_child(v_pos.x, v_pos.y);
 	v_pos.x = x + pos.x + 1.0f;
 	v_pos.y = y + pos.y + 1.0f;
 	draw_size.width = size.width - 1.0f;
@@ -46,6 +47,7 @@ t_size	CAui_button::draw(float x, float y)
 	CImage::draw_Image(v_pos, draw_size, CTexture::auto_get(sprite), bg_color);
 	rt.width = size.width + pos.x;
 	rt.height = size.height + pos.y;
+	draw_child(v_pos.x, v_pos.y);
 	return (rt);
 }
 

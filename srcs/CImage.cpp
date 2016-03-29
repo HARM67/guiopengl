@@ -6,8 +6,10 @@ CImage CImage::singleton;
 CImage::CImage()
 {
 	p_graphic = CGraphic::Instance();
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+	//glEnable(GL_DEPTH_TEST);
+
+
+	//glDepthFunc(GL_LESS);
 
 	m_shader_programme = CShader::create("CImage_shader", "./shaders/texture_vs.glsl", "./shaders/texture_fs.glsl");
 	

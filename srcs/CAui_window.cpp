@@ -1,5 +1,7 @@
 #include "CAui_window.hpp"
 
+Init_window		CAui_window::not_use;
+
 CAui_window::CAui_window()
 {
 	sprite	= "images/blanc.bmp";
@@ -14,7 +16,7 @@ CAui_window::CAui_window()
 	bg_color.red = 0.0f;
 	bg_color.green = 0.0f;
 	bg_color.blue = 0.0f;
-	bg_color.alpha = 0.8f;
+	bg_color.alpha = 0.9f;
 	size_mode = 0xf;
 }
 
@@ -53,12 +55,11 @@ t_size	CAui_window::draw(float x, float y)
 	}
 	v_pos.x = x + pos.x;
 	v_pos.y = y + pos.y;
+	//child_size = getSize(v_pos.x, v_pos.y);
+	//
+	/*
+	*/CImage::draw_Image(v_pos, draw_size, CTexture::auto_get(sprite), bg_color);
 	child_size = draw_child(v_pos.x, v_pos.y);
-	if ((size_mode & 0x2) == 0x2)
-		size.height = child_size.height + 15.0f;
-	if ((size_mode & 0xc) == 0xc)
-		size.width = child_size.width;
-	CImage::draw_Image(v_pos, size, CTexture::auto_get(sprite), bg_color);
 	return (size);
 }
 
@@ -71,7 +72,6 @@ t_size	CAui_window::draw_child(float pos_x, float pos_y)
 	i = -1;
 	rt.width = 0.0f;
 	rt.height = 0.0f;
-	pos_y += 15.0f;
 	while (++i < (int)content.size())
 	{
 		tmp = content[i]->draw(pos_x, pos_y);
@@ -80,6 +80,24 @@ t_size	CAui_window::draw_child(float pos_x, float pos_y)
 		pos_y += tmp.height;
 	}
 	return (rt);
+}
+
+t_size	CAui_window::set_drawsize()
+{
+	t_size	tmp;
+	int	i;
+
+	i = -1;
+	draw_size = size;
+	while (++i < (int)content.size())
+	{
+		tmp = content[i]->set_drawsize();
+		if ((size_mode & 0xc) == 0xc)
+			draw_size.width = (draw_size.width > content[i]->size.width) ? draw_size.width : tmp.width;
+		if ((size_mode & 0x2) == 0x2)
+			draw_size.height += tmp.height;
+	}
+	return (draw_size);
 }
 
 void	CAui_window::mouse_button_callback(int window, int action, int mods)
@@ -101,7 +119,8 @@ void	CAui_window::mouse_button_callback(int window, int action, int mods)
 			return ;
 		tmp = father->content[i];
 		father->content.erase(father->content.begin() + i);
-		father->content.insert(father->content.begin(), tmp);
+	//	father->content.insert(father->content.begin(), tmp);
+		father->content.push_back(tmp);
 	}
 	if (click && !action && in_move)
 		click(this);
@@ -116,10 +135,9 @@ CAui	*CAui_window::why(float x, float y)
 {
 	int	i;
 
-	if (x < pos.x || x > pos.x + size.width || y < pos.y || y > pos.y + size.height)
+	if (x < pos.x || x > pos.x + draw_size.width || y < pos.y || y > pos.y + draw_size.height)
 		return (0);
 	i = -1;
-	y -= 15.0f;
 	while (++i <  (int)content.size())
 	{
 		if (content[i]->why(x - pos.x, y - pos.y))
