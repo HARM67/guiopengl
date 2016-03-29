@@ -53,5 +53,47 @@
 	},
 	child : {
 		name : button
+	},
+	child : {
+		name : text,
+		str : teste2,
+		pos_x : 5
+	},
+	child : {
+		name : button
+		cmd : close	
+	},
+	child : {
+		name : button
+	},
+	child : {
+		name : button
+	},
+	child : {
+		name : text,
+		str : teste2,
+		pos_x : 5
+	},
+	child : {
+		name : button
+		cmd : close	
+	},
+	child : {
+		name : button
+	},
+	child : {
+		name : button
+	},
+	child : {
+		name : text,
+		str : teste2,
+		pos_x : 5
+	},
+	child : {
+		name : button
+		cmd : close	
+	},
+	child : {
+		name : button
 	}
 }

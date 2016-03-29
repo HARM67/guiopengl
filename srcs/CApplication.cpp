@@ -39,7 +39,7 @@ void	insert_window(CAui	*elem)
 
 	ct2 = CAui::create("v_container");
 	ct->add_Elem(ct2);
-
+/*
 	bt = CAui::create("button");
 	bt->set_size(30.0f, 30.0f);
 	bt->click = insert_window;
@@ -70,7 +70,7 @@ void	insert_window(CAui	*elem)
 	bt = CAui::create("button");
 	bt->click = insert_window;
 	win->add_Elem(bt);
-}
+*/}
 
 void	CApplication::init()
 {
