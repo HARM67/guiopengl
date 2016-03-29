@@ -32,5 +32,4 @@ struct	Init_h_container
 		CAui::objects.insert(pair<string, CAui *(*)()>("h_container", &CAui_h_container::create_h_container));
 	}
 };
-
 #endif

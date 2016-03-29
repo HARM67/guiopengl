@@ -29,11 +29,9 @@ public:
 
 struct Init_button
 {
-//public:
 	Init_button()
 	{
 		CAui::objects.insert(pair<string, CAui *(*)()>("button", &CAui_button::create_button));
 	}
-//	~Init_button(){};
 };
 #endif

@@ -1,9 +1,9 @@
 #ifndef CAUI_V_CONTAINER_HOO
 # define CAUI_V_CONTAINER_HOO
 
-typedef struct Init_v_container	t_Init_v_container;
-
 #include "CAui.hpp"
+
+typedef struct Init_v_container	t_Init_v_container;
 
 class	CAui_v_container : public CAui
 {
