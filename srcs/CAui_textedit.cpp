@@ -6,6 +6,7 @@ CAui_textedit::CAui_textedit()
 {
 	selected_character[0] = 1;
 	selected_character[1] = 1;
+	x_pos = 0;
 }
 
 CAui_textedit::~CAui_textedit()
@@ -137,6 +138,67 @@ int		check_key(unsigned char *b_key, double *key, int c_key)
 	return (0);
 }
 
+int		CAui_textedit::calc_left()
+{
+	int	i;
+	int c;
+
+	i = 0;
+	c = selected_character[1];
+	while (c >= 0 && str[c] != '\n' )
+	{
+		i++;
+		c--;
+	}
+	cout << i << endl;
+	return (i);
+}
+
+void	CAui_textedit::do_up()
+{
+	int i;
+
+	i = 1;
+	while (selected_character[1] > 0 && str[selected_character[1]] != '\n')
+	{
+		selected_character[1]--;
+		if (selected_character[1] == 0)
+			return ;
+	}
+	selected_character[1]--;
+	while (selected_character[1] > 0 && str[selected_character[1]] != '\n')
+	{
+		selected_character[1]--;
+	}
+	if (selected_character[1] == 0)
+		i++;
+	selected_character[1]++;
+	while (i < x_pos && str[selected_character[1]] != '\n')
+	{
+		selected_character[1]++;
+		i++;
+	}
+	cout << "j'ai fait " << i << endl;
+}
+
+void	CAui_textedit::do_down()
+{
+	int i;
+
+	i = 1;
+	while (selected_character[1] <= str.size() && str[selected_character[1]] != '\n')
+	{
+		selected_character[1]++;
+	}
+	selected_character[1]++;
+	while (i < x_pos && str[selected_character[1]] != '\n' && selected_character[1] <= str.size())
+	{
+		selected_character[1]++;
+		i++;
+	}
+	cout << "j'ai fait " << i << endl;
+}
+
 void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 {
 	int i;
@@ -185,6 +247,18 @@ void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 		selected_character[0]++;
 		selected_character[1] = selected_character[0];
 	}
+	if (check_key(b_key, key, GLFW_KEY_UP))
+	{
+		do_up();
+		if (!b_key[GLFW_KEY_LEFT_SHIFT] && !b_key[GLFW_KEY_RIGHT_SHIFT])
+			selected_character[0] = selected_character[1];
+	}
+	if (check_key(b_key, key, GLFW_KEY_DOWN))
+	{
+		do_down();
+		if (!b_key[GLFW_KEY_LEFT_SHIFT] && !b_key[GLFW_KEY_RIGHT_SHIFT])
+			selected_character[0] = selected_character[1];
+	}
 	if (check_key(b_key, key, GLFW_KEY_RIGHT))
 	{
 		//selected_character[1] = selected_character[0];
@@ -195,6 +269,7 @@ void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 				selected_character[0] = selected_character[1];
 		}
 		key[GLFW_KEY_RIGHT] = glfwGetTime() + TIME_MOVE_KEY;
+		x_pos = calc_left();
 	}
 	if (check_key(b_key, key, GLFW_KEY_LEFT))
 	{
@@ -206,6 +281,7 @@ void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 				selected_character[0] = selected_character[1];
 		}
 		key[GLFW_KEY_LEFT] = glfwGetTime() + TIME_MOVE_KEY;
+		x_pos = calc_left();
 	}
 	if (check_key(b_key, key, GLFW_KEY_PAGE_UP))
 	{
@@ -281,10 +357,10 @@ CAui	*CAui_textedit::why(float x, float y)
 		if (x >= pos_x && x < pos_x + (slot->advance.x >> 6) &&
 			y >= pos_y && y < pos_y + CFont::get_size(font_name))
 		{
-			/*
+			
 			selected_character[0] = i;
 			selected_character[1] = i;
-			*/return (this);
+			return (this);
 		}
 		pos_x += slot->advance.x >> 6;
 	}
