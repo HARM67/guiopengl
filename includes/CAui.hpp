@@ -66,6 +66,7 @@ public:
 	void			(*click)(CAui	*);
 	virtual t_size	set_drawsize();
 	void			set_str(string n_str);
+	void			erase();
 };
 
 #endif

@@ -24,4 +24,6 @@
 :vs ../srcs/CFont.cpp
  :tabe ../includes/CAui_texte.hpp
 :vs ../srcs/CAui_texte.cpp
+ :tabe ../includes/CAui_loader.hpp
+:vs ../srcs/CAui_loader.cpp
 

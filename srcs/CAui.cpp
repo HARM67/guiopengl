@@ -28,7 +28,27 @@ CAui::CAui()
 
 CAui::~CAui()
 {
+	int	i;
 
+	i = -1;
+	while (++i < (int)content.size())
+	{
+		delete content[i];
+	}
+	if (father)
+	{
+		i = -1;
+		while (++i < (int)father->content.size())
+		{
+			if (father->content[i] == this)
+				father->content.erase(father->content.begin() + i);
+		}
+	}
+}
+
+void	CAui::erase()
+{
+	delete this;
 }
 
 void	CAui::set_position(float x, float y)
