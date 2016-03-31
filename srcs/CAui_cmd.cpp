@@ -1,6 +1,8 @@
 #include "CAui_cmd.hpp"
 
-CAui_cmd	CAui_cmd::m_instance;
+CAui_cmd		CAui_cmd::m_instance;
+double			CAui_cmd::command[512];
+unsigned char	CAui_cmd::b_key[512];
 
 void	mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
@@ -26,6 +28,23 @@ void	mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		CAui_cmd::Instance()->current->in_move = 0;
 	}
 }
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	    if (key >= 0 && key < 512 && action == GLFW_PRESS)
+		{
+			CAui_cmd::command[key] = glfwGetTime();// + TIME_FIRST_KEY;
+			CAui_cmd::b_key[key] = 1;
+		}
+	    else if (key >= 0 && key < 512 && action == GLFW_RELEASE)
+		{
+			CAui_cmd::command[key] = glfwGetTime() + 0.1f;
+			CAui_cmd::b_key[key] = 0;
+		}
+		if (CAui_cmd::Instance()->current)
+		{
+			CAui_cmd::Instance()->current->key_callback(CAui_cmd::b_key, CAui_cmd::command);
+		}
+}
 
 void	cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
@@ -44,4 +63,5 @@ CAui_cmd::CAui_cmd()
 {
 	glfwSetMouseButtonCallback(CGraphic::Instance()->m_window, *mouse_button_callback);
 	glfwSetCursorPosCallback(CGraphic::Instance()->m_window, *cursor_position_callback);
+	glfwSetKeyCallback(CGraphic::Instance()->m_window, key_callback);
 }

@@ -90,6 +90,14 @@ public:
 		}
 		return (it2->second->face->glyph);
 	};
+	static unsigned int	get_size(string name)
+	{
+		map<string, CFont *>::iterator it;
+		it = list.find(name);
+		if (it == list.end())
+			return (0);
+		return (it->second->size);
+	};
 };
 #endif
 

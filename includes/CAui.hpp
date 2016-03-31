@@ -65,6 +65,8 @@ public:
 	virtual void	cursor_position_callback(int status, double xpos, double ypos);
 	void			(*click)(CAui	*);
 	virtual t_size	set_drawsize();
+
+	virtual void key_callback(unsigned char *b_key, double *key){};
 	void			set_str(string n_str);
 	void			erase();
 };

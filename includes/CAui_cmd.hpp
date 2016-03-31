@@ -6,6 +6,9 @@
 # include "CAui.hpp"
 # include <iostream>
 
+# define TIME_NEXT_KEY 0.2f
+# define TIME_MOVE_KEY 0.1f
+
 class	CAui_cmd
 {
 private:
@@ -14,6 +17,8 @@ private:
 	static CAui_cmd		m_instance;
 
 public:
+	static double 			command[512];
+	static unsigned char	b_key[512];
 	CAui		*current;
 	static CAui_cmd		*Instance()
 	{

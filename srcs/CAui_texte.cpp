@@ -58,15 +58,15 @@ t_size	CAui_texte::print_string(t_position v_pos)
 	t_position		tmp_pos;
 
 	i = -1;
-	rt.height = 16;
+	rt.height = CFont::get_size(font_name);
 	rt.width = 0.0f;
 	tmp_pos = v_pos;
 	while (++i < str.size())
 	{
 		if (str[i] == '\n')
 		{
-			v_pos.y += 16;
-			rt.height += 16;
+			v_pos.y += CFont::get_size(font_name);
+			rt.height += CFont::get_size(font_name);
 			tmp_pos = v_pos;
 			continue ;
 		}
@@ -85,12 +85,6 @@ t_size	CAui_texte::draw(float x, float y)
 
 	v_pos.x = x + pos.x;
 	v_pos.y = y + pos.y;
-	//child_size = draw_child(v_pos.x, v_pos.y);
-	/*if ((size_mode & 0x2) == 0x2)
-		size.height = child_size.height + 15.0f;
-	if ((size_mode & 0xc) == 0xc)
-		size.width = child_size.width;
-	*/
 	size = print_string(v_pos);
 	return (size);
 }
@@ -99,20 +93,25 @@ t_size	CAui_texte::set_drawsize()
 {
 	int				i;
 	FT_GlyphSlot	slot;
+	float			current_width;
 
 	i = -1;
-	draw_size.height = 16;
+	draw_size.height = CFont::get_size(font_name);
 	draw_size.width = 0.0f;
 	while (++i < str.size())
 	{
 		if (str[i] == '\n')
 		{
-			draw_size.height += 16;
+			draw_size.height += CFont::get_size(font_name);
+			draw_size.width = (draw_size.width > current_width) ? draw_size.width : current_width;
+			current_width = 0.0f;
 			continue ;
 		}
 		slot = CFont::get_drawsize(font_name, str[i]);
-		draw_size.width += slot->bitmap.width + slot->bitmap_left;
+		//draw_size.width += slot->bitmap.width + slot->bitmap_left;
+		current_width += slot->advance.x >> 6;
 	}
+	draw_size.width = (draw_size.width > current_width) ? draw_size.width : current_width;
 	return (draw_size);
 }
 
@@ -149,7 +148,7 @@ CAui	*CAui_texte::why(float x, float y)
 {
 	int	i;
 
-	if (x < pos.x || x > pos.x + size.width || y < pos.y || y > pos.y + size.height)
+	if (x < pos.x || x > pos.x + draw_size.width || y < pos.y || y > pos.y + draw_size.height)
 		return (0);
 	i = -1;
 	y -= 15.0f;
@@ -157,7 +156,7 @@ CAui	*CAui_texte::why(float x, float y)
 	{
 		if (content[i]->why(x - pos.x, y - pos.y))
 			return (content[i]->why(x - pos.x, y - pos.y));
-		y -= content[i]->size.height + content[i]->pos.y;
+		y -= content[i]->draw_size.height + content[i]->pos.y;
 	}
 	return (0);
 }

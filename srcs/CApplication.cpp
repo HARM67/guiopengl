@@ -30,12 +30,16 @@ void	insert_window(CAui	*elem)
 	CAui			*ct2;
 	CAui			*bt4;
 	CAui			*texte;
+	CAui			*textedit;
 
 
 	win = CAui::create("window");
 	win->set_position(100.0f, 100.0f);
 	only->add_Elem(win);
 
+	textedit = CAui::create("textedit");
+	win->add_Elem(textedit);
+/*
 	win->add_Elem(CAui_loader::parse_object("tt.cat"));
 
 	ct = CAui::create("h_container");
@@ -74,6 +78,7 @@ void	insert_window(CAui	*elem)
 	bt = CAui::create("button");
 	bt->click = delete_father;
 	win->add_Elem(bt);
+	*/
 }
 
 void	CApplication::init()
@@ -87,7 +92,6 @@ void	CApplication::init()
 
 	//CAui_loader	loader;
 	//
-	glfwSwapInterval(0);
 	insert_window(0);
 	time = glfwGetTime();
 	while( glfwGetKey(CGraphic::Instance()->m_window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
