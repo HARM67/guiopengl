@@ -36,6 +36,7 @@ public:
 	t_size			draw_child(float pos_x, float pos_y);
 	virtual CAui	*why(float x, float y);
 	virtual t_size	set_drawsize();
+	virtual void	set_font(string ft_name, string ft, unsigned int size);
 };
 
 struct	Init_texte

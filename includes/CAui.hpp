@@ -22,6 +22,7 @@ protected:
 	string		str;
 	
 public:
+	bool					is_focus;
 	typedef vector<CAui *> list_child;
 	typedef	map<string, CAui *(*)()>	list_object;
 	static list_object				objects;
@@ -69,6 +70,7 @@ public:
 	virtual void key_callback(unsigned char *b_key, double *key){};
 	void			set_str(string n_str);
 	void			erase();
+	virtual void	set_font(string ft_name, string ft, unsigned int size){};
 };
 
 #endif

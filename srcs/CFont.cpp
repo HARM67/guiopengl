@@ -48,7 +48,6 @@ void	CFont::load_char_font(unsigned int c)
 			FT_LOAD_DEFAULT); 
 	error = FT_Render_Glyph( tmp->face->glyph,
 			FT_RENDER_MODE_NORMAL); 
-
 	FT_GlyphSlot	slot = tmp->face->glyph;
 	glActiveTexture (GL_TEXTURE0);
 	glGenTextures (1, &tmp->nbr);
@@ -69,8 +68,6 @@ void	CFont::load_char_font(unsigned int c)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	//cout << "letter : " << (char)c << tmp->slot->bitmap.width << " " << tmp->slot->bitmap.rows << endl;
-	//print_all_slot();
 }
 
 FT_GlyphSlot	CFont::print_char(unsigned int	c, t_position pos, t_color color)

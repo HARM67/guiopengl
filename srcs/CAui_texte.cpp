@@ -42,11 +42,18 @@ CAui_texte::CAui_texte(string n_str)
 	color.alpha = 1.0f;
 }
 
+void	CAui_texte::set_font(string ft_name, string ft, unsigned int size)
+{
+	font_size = size;
+	font_name = ft_name;
+	font = ft;
+	CFont::load_font(font_name, font, font_size);
+}
+
 t_size	CAui_texte::draw()
 {
 	if (!visible)
 		return (size);
-	//code print
 	return (size);
 }
 
@@ -71,7 +78,6 @@ t_size	CAui_texte::print_string(t_position v_pos)
 			continue ;
 		}
 		slot = CFont::put_char(font_name, str[i], tmp_pos, color);
-		//rt.height = (rt.height > sl)
 		rt.width += slot->bitmap.width + slot->bitmap_left;
 		tmp_pos.x += slot->advance.x >> 6;
 	}

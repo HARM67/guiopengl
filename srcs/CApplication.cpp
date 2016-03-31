@@ -37,8 +37,35 @@ void	insert_window(CAui	*elem)
 	win->set_position(100.0f, 100.0f);
 	only->add_Elem(win);
 
+
+
+	bt = CAui::create("button");
+	bt->click = insert_window;
+	win->add_Elem(bt);
+//	win->add_Elem(CAui_loader::parse_object("tt.cat"));
 	textedit = CAui::create("textedit");
+	textedit->set_font("Arial Narrow 30", "fonts/Arial Narrow.ttf", 30);
 	win->add_Elem(textedit);
+
+	bt = CAui::create("button");
+	bt->click = insert_window;
+	win->add_Elem(bt);
+
+	textedit = CAui::create("textedit");
+	textedit->set_font("Arial Narrow 30", "fonts/Arial Narrow.ttf", 30);
+	win->add_Elem(textedit);
+	bt = CAui::create("button");
+	bt->click = insert_window;
+	win->add_Elem(bt);
+	bt = CAui::create("button");
+	bt->click = insert_window;
+	win->add_Elem(bt);
+	bt = CAui::create("button");
+	bt->click = insert_window;
+	win->add_Elem(bt);
+	bt = CAui::create("button");
+	bt->click = insert_window;
+	win->add_Elem(bt);
 /*
 	win->add_Elem(CAui_loader::parse_object("tt.cat"));
 

@@ -16,6 +16,10 @@ void	mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		if (!tmp)
 			return;
 		CAui_cmd::Instance()->current = tmp;
+		if (CAui_cmd::Instance()->focus)
+			CAui_cmd::Instance()->focus->is_focus = 0;
+		CAui_cmd::Instance()->focus = tmp;
+		CAui_cmd::Instance()->focus->is_focus = 1;
 		CAui::click_down.x = (float)xpos;
 		CAui::click_down.y = (float)ypos;
 		tmp->mouse_button_callback(button, action, mods);
@@ -28,22 +32,23 @@ void	mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		CAui_cmd::Instance()->current->in_move = 0;
 	}
 }
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	    if (key >= 0 && key < 512 && action == GLFW_PRESS)
-		{
-			CAui_cmd::command[key] = glfwGetTime();// + TIME_FIRST_KEY;
-			CAui_cmd::b_key[key] = 1;
-		}
-	    else if (key >= 0 && key < 512 && action == GLFW_RELEASE)
-		{
-			CAui_cmd::command[key] = glfwGetTime() + 0.1f;
-			CAui_cmd::b_key[key] = 0;
-		}
-		if (CAui_cmd::Instance()->current)
-		{
-			CAui_cmd::Instance()->current->key_callback(CAui_cmd::b_key, CAui_cmd::command);
-		}
+	if (key >= 0 && key < 512 && action == GLFW_PRESS)
+	{
+		CAui_cmd::command[key] = glfwGetTime();// + TIME_FIRST_KEY;
+		CAui_cmd::b_key[key] = 1;
+	}
+	else if (key >= 0 && key < 512 && action == GLFW_RELEASE)
+	{
+		CAui_cmd::command[key] = glfwGetTime() + 0.1f;
+		CAui_cmd::b_key[key] = 0;
+	}
+	if (CAui_cmd::Instance()->focus)
+	{
+		CAui_cmd::Instance()->focus->key_callback(CAui_cmd::b_key, CAui_cmd::command);
+	}
 }
 
 void	cursor_position_callback(GLFWwindow* window, double xpos, double ypos)

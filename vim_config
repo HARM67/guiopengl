@@ -26,4 +26,6 @@
 :vs ../srcs/CAui_texte.cpp
  :tabe ../includes/CAui_loader.hpp
 :vs ../srcs/CAui_loader.cpp
+ :tabe ../includes/CAui_textedit.hpp
+:vs ../srcs/CAui_textedit.cpp
 

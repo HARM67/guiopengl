@@ -20,6 +20,7 @@ public:
 	static double 			command[512];
 	static unsigned char	b_key[512];
 	CAui		*current;
+	CAui		*focus;
 	static CAui_cmd		*Instance()
 	{
 		return (&m_instance);

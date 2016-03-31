@@ -7,11 +7,15 @@ CAui_textedit::CAui_textedit()
 	selected_character[0] = 1;
 	selected_character[1] = 1;
 	x_pos = 0;
+	tmp_sel = 0;
+	use_newline = 1;
+	limit = 0;
+	str = "textedit";
+	size_min.width = 60.0f;
 }
 
 CAui_textedit::~CAui_textedit()
 {
-
 }
 
 int		min(int a, int b)
@@ -35,9 +39,9 @@ t_size	CAui_textedit::print_string(t_position v_pos)
 
 	int				cursor_temoin;
 
-	sel_color.red = 1.0f;
-	sel_color.green= 0.0f;
-	sel_color.blue = 0.0f;
+	sel_color.red = 0.5f;
+	sel_color.green= 0.5f;
+	sel_color.blue = 1.0f;
 	sel_color.alpha = 1.0f;
 
 	i = -1;
@@ -47,22 +51,25 @@ t_size	CAui_textedit::print_string(t_position v_pos)
 	cursor_temoin = 0;
 	while (++i < str.size())
 	{
-		if (i >= min(selected_character[0], selected_character[1]) && i < max(selected_character[0], selected_character[1]))
+		if (is_focus)
 		{
-			slot = CFont::get_drawsize(font_name, str[i]);
-			selecte_size.width = slot->advance.x >> 6;
-			selecte_size.height = CFont::get_size(font_name);
-			CImage::draw_Image(tmp_pos, selecte_size, CTexture::auto_get("images/blanc.bmp"), sel_color);
-			cursor_temoin = 1;
-		}
-		else if (i == selected_character[0])
-		{
-			slot = CFont::get_drawsize(font_name, str[i]);
-			selecte_size.width = 1.0f;
-			selecte_size.height = CFont::get_size(font_name);
-			if (((int)(glfwGetTime() * 2)) & 0x1)
+			if (i >= min(selected_character[0], selected_character[1]) && i < max(selected_character[0], selected_character[1]))
+			{
+				slot = CFont::get_drawsize(font_name, str[i]);
+				selecte_size.width = slot->advance.x >> 6;
+				selecte_size.height = CFont::get_size(font_name);
 				CImage::draw_Image(tmp_pos, selecte_size, CTexture::auto_get("images/blanc.bmp"), sel_color);
-			cursor_temoin = 1;
+				cursor_temoin = 1;
+			}
+			else if (i == selected_character[0])
+			{
+				slot = CFont::get_drawsize(font_name, str[i]);
+				selecte_size.width = 1.0f;
+				selecte_size.height = CFont::get_size(font_name);
+				if (((int)(glfwGetTime() * 2)) & 0x1)
+					CImage::draw_Image(tmp_pos, selecte_size, CTexture::auto_get("images/blanc.bmp"), sel_color);
+				cursor_temoin = 1;
+			}
 		}
 		if (str[i] == '\n')
 		{
@@ -75,7 +82,7 @@ t_size	CAui_textedit::print_string(t_position v_pos)
 		rt.width += slot->bitmap.width + slot->bitmap_left;
 		tmp_pos.x += slot->advance.x >> 6;
 	}
-	if (!cursor_temoin)
+	if (!cursor_temoin && is_focus)
 	{
 		selecte_size.width = 1.0f;
 		selecte_size.height = CFont::get_size(font_name);
@@ -95,37 +102,48 @@ t_size	CAui_textedit::draw(float x, float y)
 	size = print_string(v_pos);
 	return (size);
 }
-/*
-void	CAui_textedit:draw_cursor()
-	{
-		int				i;
-		FT_GlyphSlot	slot;
 
-		i = -1;
-		draw_size.height = CFont::get_size(font_name);
-		draw_size.width = 0.0f;
-		while (++i < str.size())
+t_size	CAui_textedit::set_drawsize()
+{
+	int				i;
+	FT_GlyphSlot	slot;
+	float			current_width;
+
+	i = -1;
+	cout << size.width << endl;
+	draw_size.height = CFont::get_size(font_name);
+	draw_size.width = 0.0f;
+	while (++i < str.size())
+	{
+		if (str[i] == '\n')
 		{
-			if (str[i] == '\n')
-			{
-				draw_size.height += CFont::get_size(font_name);
-				continue ;
-			}
-			if (selected_character[0] == i)
-			{
-				
-			}
-			slot = CFont::get_drawsize(font_name, str[i]);
-			//draw_size.width += slot->bitmap.width + slot->bitmap_left;
-			draw_size.width += slot->advance.x >> 6;
+			draw_size.height += CFont::get_size(font_name);
+			draw_size.width = (draw_size.width > current_width) ? draw_size.width : current_width;
+			current_width = 0.0f;
+			continue ;
 		}
-		return (draw_size);
+		slot = CFont::get_drawsize(font_name, str[i]);
+		current_width += slot->advance.x >> 6;
 	}
-	*/
+	draw_size.width = (draw_size.width > current_width) ? draw_size.width : current_width;
+	if (size_min.width > draw_size.width)
+		draw_size.width = size_min.width;
+	return (draw_size);
+}
 
 void	CAui_textedit::mouse_button_callback(int window, int action, int mods)
 {
-	cout << str[selected_character[0]] << endl;
+	if (in_move)
+	{
+		selected_character[1] = tmp_sel;
+	}
+	else
+	{
+		selected_character[1] = tmp_sel;
+		if (!CAui_cmd::Instance()->b_key[GLFW_KEY_LEFT_SHIFT] &&
+				!CAui_cmd::Instance()->b_key[GLFW_KEY_RIGHT_SHIFT])
+			selected_character[0] = tmp_sel;
+	}
 }
 
 int		check_key(unsigned char *b_key, double *key, int c_key)
@@ -178,7 +196,6 @@ void	CAui_textedit::do_up()
 		selected_character[1]++;
 		i++;
 	}
-	cout << "j'ai fait " << i << endl;
 }
 
 void	CAui_textedit::do_down()
@@ -196,17 +213,16 @@ void	CAui_textedit::do_down()
 		selected_character[1]++;
 		i++;
 	}
-	cout << "j'ai fait " << i << endl;
 }
 
 void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 {
 	int i;
 
-	i = GLFW_KEY_A;
-	while (i <= GLFW_KEY_Z)
+	i = 32;
+	while (i <= 127)
 	{
-		if (check_key(b_key, key, i))
+		if (check_key(b_key, key, i) && (!limit || str.size() < limit))
 		{
 			if (selected_character[0] != selected_character[1])
 			{
@@ -214,16 +230,16 @@ void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 			selected_character[0] = min(selected_character[0], selected_character[1]);
 				selected_character[1] = selected_character[0];
 			}
-			if (b_key[GLFW_KEY_LEFT_SHIFT] || b_key[GLFW_KEY_RIGHT_SHIFT])
-				str.insert(str.begin() + selected_character[0], i);
-			else
+			if (!b_key[GLFW_KEY_LEFT_SHIFT] && !b_key[GLFW_KEY_RIGHT_SHIFT] && i >= GLFW_KEY_A && i <= GLFW_KEY_Z)
 				str.insert(str.begin() + selected_character[0], i + 32);
+			else
+				str.insert(str.begin() + selected_character[0], i);
 			selected_character[0]++;
 			selected_character[1] = selected_character[0];
 		}
 		i++;
 	}
-	if (check_key(b_key, key, GLFW_KEY_SPACE))
+	if (check_key(b_key, key, GLFW_KEY_SPACE) && (!limit || str.size() < limit))
 	{
 		if (selected_character[0] != selected_character[1])
 		{
@@ -235,7 +251,7 @@ void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 		selected_character[0]++;
 		selected_character[1] = selected_character[0];
 	}
-	if (check_key(b_key, key, GLFW_KEY_ENTER) || check_key(b_key, key,GLFW_KEY_KP_ENTER))
+	if ((check_key(b_key, key, GLFW_KEY_ENTER) || check_key(b_key, key,GLFW_KEY_KP_ENTER)) && use_newline && (!limit || str.size() < limit))
 	{
 		if (selected_character[0] != selected_character[1])
 		{
@@ -261,7 +277,6 @@ void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 	}
 	if (check_key(b_key, key, GLFW_KEY_RIGHT))
 	{
-		//selected_character[1] = selected_character[0];
 		if (selected_character[1] < str.size())
 		{
 			selected_character[1]++;
@@ -273,7 +288,6 @@ void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 	}
 	if (check_key(b_key, key, GLFW_KEY_LEFT))
 	{
-		//selected_character[1] = selected_character[0];
 		if (selected_character[1] > 0)
 		{
 			selected_character[1]--;
@@ -330,7 +344,10 @@ void	CAui_textedit::key_callback(unsigned char *b_key, double *key)
 
 void	CAui_textedit::cursor_position_callback(int status, double xpos, double ypos)
 {
-
+	if (in_move)
+	{
+		selected_character[1] = tmp_sel;
+	}
 }
 
 CAui	*CAui_textedit::why(float x, float y)
@@ -358,11 +375,11 @@ CAui	*CAui_textedit::why(float x, float y)
 			y >= pos_y && y < pos_y + CFont::get_size(font_name))
 		{
 			
-			selected_character[0] = i;
-			selected_character[1] = i;
+			tmp_sel = i;
 			return (this);
 		}
 		pos_x += slot->advance.x >> 6;
 	}
+	tmp_sel = str.size();
 	return (this);
 }

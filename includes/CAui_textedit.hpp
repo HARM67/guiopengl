@@ -14,8 +14,13 @@ typedef struct Init_textedit t_Init_textedit;
 class	CAui_textedit : public CAui_texte
 {
 private:
+	bool	use_newline;
+	bool	use_tab;
 	int		selected_character[2];
 	int		x_pos;
+	int		tmp_sel;
+	int		limit;
+	t_size	size_min;
 	static t_Init_textedit	not_use;
 	CAui_textedit();
 	~CAui_textedit();
@@ -24,15 +29,14 @@ public:
 	{
 		return (new CAui_textedit);
 	};
-
 	virtual t_size		print_string(t_position vpos);
 	virtual t_size		draw(float x, float y);
 	virtual void		mouse_button_callback(int button, int action, int mods);
 	virtual void		cursor_position_callback(int status, double xpos, double ypos);
 	virtual CAui		*why(float x, float y);
 	virtual void 		key_callback(unsigned char *b_key, double *key);
+	virtual t_size		set_drawsize();
 	int					calc_left();
-
 	void				do_up();
 	void				do_down();
 };
